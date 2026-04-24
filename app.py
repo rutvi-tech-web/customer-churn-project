@@ -26,10 +26,9 @@ total_charges = st.sidebar.number_input("Total Charges", 0.0, 100000.0, 500.0)
 gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
 contract = st.sidebar.selectbox("Contract Type", ["Month-to-month", "One year", "Two year"])
 
-# ---------------- INPUT DATA ----------------
+# ---------------- INPUT DATA FOR MODEL ----------------
 input_dict = {col: 0 for col in columns}
 
-# Basic mapping
 if 'tenure' in input_dict:
     input_dict['tenure'] = tenure
 if 'MonthlyCharges' in input_dict:
@@ -37,7 +36,6 @@ if 'MonthlyCharges' in input_dict:
 if 'TotalCharges' in input_dict:
     input_dict['TotalCharges'] = total_charges
 
-# Example categorical encoding (adjust if needed)
 if 'gender_Male' in input_dict:
     input_dict['gender_Male'] = 1 if gender == "Male" else 0
 
@@ -48,17 +46,27 @@ if 'Contract_Two year' in input_dict:
 
 input_df = pd.DataFrame([input_dict])
 
-# ---------------- MAIN LAYOUT ----------------
+# ---------------- LAYOUT ----------------
 col1, col2 = st.columns(2)
 
+# ---------------- INPUT SUMMARY (FIXED) ----------------
 with col1:
     st.subheader("📥 Input Summary")
-    st.write(input_df)
 
+    summary = {
+        "Tenure": tenure,
+        "Monthly Charges": monthly_charges,
+        "Total Charges": total_charges,
+        "Gender": gender,
+        "Contract": contract
+    }
+
+    st.table(pd.DataFrame(summary.items(), columns=["Feature", "Value"]))
+
+# ---------------- PREDICTION ----------------
 with col2:
     st.subheader("📊 Prediction Output")
 
-# ---------------- PREDICTION ----------------
 if st.button("🚀 Predict Churn"):
 
     prediction = model.predict(input_df)[0]
@@ -66,7 +74,6 @@ if st.button("🚀 Predict Churn"):
 
     with col2:
 
-        # Result
         if prediction == 1:
             st.error("❌ High Risk: Customer may churn")
             st.warning("Possible reasons: Low tenure or high charges.")
@@ -74,7 +81,6 @@ if st.button("🚀 Predict Churn"):
             st.success("✅ Low Risk: Customer likely to stay")
             st.info("Customer is stable based on current usage.")
 
-        # KPI Metrics
         st.metric("Churn Probability", f"{probability:.2f}")
         st.metric("Tenure", tenure)
         st.metric("Monthly Charges", monthly_charges)
@@ -94,4 +100,4 @@ if st.button("🚀 Predict Churn"):
 
 # ---------------- FOOTER ----------------
 st.markdown("---")
-st.caption("Made by Your Name | B.Tech Gen AI Project")
+st.caption("Made by Rutvi Patel")
