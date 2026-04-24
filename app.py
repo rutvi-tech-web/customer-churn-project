@@ -100,4 +100,4 @@ if st.button("🚀 Predict Churn"):
 
 # ---------------- FOOTER ----------------
 st.markdown("---")
-st.caption("Made by Rutvi Patel")
+st.caption("Made by : Rutvi Patel")
