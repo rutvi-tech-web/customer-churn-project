@@ -83,6 +83,11 @@ This project helped me understand how machine learning can be applied to real-wo
 
 ---
 
+## Live Application
+
+You can try the project here:  
+https://customer-churn-project-z37dsuvmk3jgkq42hhhsp4.streamlit.app/
+
 ## Author
 
 Name: Rutvi Patel
